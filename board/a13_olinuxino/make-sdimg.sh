@@ -87,11 +87,15 @@ echo "  " bootloader
 
 MOUNT=`mktemp -d`
 
-tar -xf $ROOTFS_TAR -C $MOUNT --strip=2 './boot/u-boot.bin' './boot/sunxi-spl.bin'
+tar -xf $ROOTFS_TAR -C $MOUNT --strip=2 --wildcards './boot/*.bin' --exclude './boot/script.bin'
 
 losetup $LOOP $SDIMG_FILE
+if [ -e $MOUNT/u-boot-sunxi-with-spl.bin ]; then
+dd if=$MOUNT/u-boot-sunxi-with-spl.bin of=$LOOP bs=1024 seek=8  > /dev/null 2>&1
+else
 dd if=$MOUNT/sunxi-spl.bin of=$LOOP bs=1024 seek=8  > /dev/null 2>&1
 dd if=$MOUNT/u-boot.bin of=$LOOP bs=1024 seek=32  > /dev/null 2>&1
+fi
 sync
 losetup -d $LOOP
 
