@@ -9,12 +9,12 @@ cp -v $BOARD_DIR/uEnv.txt $BOOT
 
 if [ -e $BINARIES_DIR/*.dtb ];
 then
-	$HOST_DIR/usr/bin/mkimage -C none -A arm -T script -d $BOARD_DIR/boot_dtb.cmd $BOARD_DIR/boot.scr
+	$HOST_DIR/usr/bin/mkimage -C none -A arm -T script -d $BOARD_DIR/boot_dtb.cmd $BINARIES_DIR/boot.scr
 else
-	$HOST_DIR/usr/bin/mkimage -C none -A arm -T script -d $BOARD_DIR/boot.cmd $BOARD_DIR/boot.scr
+	$HOST_DIR/usr/bin/mkimage -C none -A arm -T script -d $BOARD_DIR/boot.cmd $BINARIES_DIR/boot.scr
 fi
 
-cp -v $BOARD_DIR/boot.scr $BOOT
+cp -v $BINARIES_DIR/boot.scr $BOOT
 
 if [ -e $BINARIES_DIR/u-boot.bin ];
 then
